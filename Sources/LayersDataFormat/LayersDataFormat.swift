@@ -61,12 +61,13 @@ public extension Tensor where Scalar: TensorFlowFloatingPoint {
     }
     
     @inlinable
+    @derivative(of: convolved2DDF, wrt: (self, filter))
     internal func _vjpConvolved2DDF(
         filter: Tensor,
         strides: (Int, Int, Int, Int),
         padding: Padding,
         dataFormat: _Raw.DataFormat = .nhwc
-    ) -> (Tensor, (Tensor) -> (Tensor, Tensor)) {
+    ) -> (value: Tensor, pullback: (Tensor) -> (Tensor, Tensor)) {
         let value = convolved2DDF(withFilter: filter, strides: strides,
                                 padding: padding, dataFormat: dataFormat)
         return (value, { v in
@@ -83,12 +84,13 @@ public extension Tensor where Scalar: TensorFlowFloatingPoint {
         })
     }
     @inlinable
+    @derivative(of: averagePooledDF, wrt: self)
     internal func _vjpAveragePooledDF(
         kernelSize: (Int, Int, Int, Int),
         strides: (Int, Int, Int, Int),
         padding: Padding,
         dataFormat: _Raw.DataFormat = .nhwc
-    ) -> (Tensor, (Tensor) -> Tensor) {
+    ) -> (value: Tensor, pullback: (Tensor) -> Tensor) {
         // TODO: Currently this is not higher order differentiable. Redefine in
         // closed form.
         let value = averagePooledDF(kernelSize: kernelSize, strides: strides,
@@ -118,10 +120,10 @@ public extension Tensor where Scalar: FloatingPoint {
     /// - Precondition: `self` must have rank 4.
     /// - Precondition: `filter` must have rank 4.
     @inlinable @inline(__always)
-    @differentiable(
+    /*@differentiable(
         wrt: (self, filter), vjp: _vjpConvolved2DDF
         where Scalar: TensorFlowFloatingPoint
-    )
+    )*/
     func convolved2DDF(
         withFilter filter: Tensor,
         strides: (Int, Int, Int, Int),
@@ -139,10 +141,6 @@ public extension Tensor where Scalar: FloatingPoint {
     }
     
     @inlinable @inline(__always)
-    @differentiable(
-        wrt: self, vjp: _vjpAveragePooledDF(kernelSize:strides:padding:dataFormat:)
-        where Scalar : TensorFlowFloatingPoint
-    )
     func averagePooledDF(
         kernelSize: (Int, Int, Int, Int),
         strides: (Int, Int, Int, Int),
