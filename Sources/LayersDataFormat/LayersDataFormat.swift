@@ -21,7 +21,6 @@ public extension Padding {
 public extension Tensor where Scalar: TensorFlowFloatingPoint {
     /// TensorFlow builtin conv2d gradient helper for the input.
     @inlinable
-    //@differentiable(wrt: (self, filter), vjp: _vjpConv2DBackpropInput)
     internal func conv2DBackpropInputDF(
         shape: Tensor<Int32>,
         filter: Tensor,
@@ -41,7 +40,6 @@ public extension Tensor where Scalar: TensorFlowFloatingPoint {
 
     /// TensorFlow builtin conv2d gradient helper for the filter.
     @inlinable
-    //@differentiable(wrt: (self, input), vjp: _vjpConv2DBackpropFilter)
     internal func conv2DBackpropFilterDF(
         input: Tensor,
         filterSizes: Tensor<Int32>,
@@ -120,10 +118,6 @@ public extension Tensor where Scalar: FloatingPoint {
     /// - Precondition: `self` must have rank 4.
     /// - Precondition: `filter` must have rank 4.
     @inlinable @inline(__always)
-    /*@differentiable(
-        wrt: (self, filter), vjp: _vjpConvolved2DDF
-        where Scalar: TensorFlowFloatingPoint
-    )*/
     func convolved2DDF(
         withFilter filter: Tensor,
         strides: (Int, Int, Int, Int),
