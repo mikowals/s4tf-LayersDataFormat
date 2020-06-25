@@ -21,7 +21,7 @@ let package = Package(
     targets: [
         .target(
             name: "LayersDataFormat",
-            dependencies: []),
+            dependencies: ["TensorFlow"]),
         .testTarget(
             name: "LayersDataFormatTests",
             dependencies: ["LayersDataFormat"]),
