@@ -14,15 +14,11 @@ let package = Package(
             targets: ["LayersDataFormat"]),
     ],
     dependencies: [
-        .package(
-            name: "TensorFlow",
-            url: "https://github.com/tensorflow/swift-apis.git",
-            .branch("master")),
     ],
     targets: [
         .target(
             name: "LayersDataFormat",
-            dependencies: ["TensorFlow"]),
+            dependencies: []),
         .testTarget(
             name: "LayersDataFormatTests",
             dependencies: ["LayersDataFormat"]),
