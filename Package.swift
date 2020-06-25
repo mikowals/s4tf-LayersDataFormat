@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,6 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
+            name: "TensorFlow",
             url: "https://github.com/tensorflow/swift-apis.git",
             .branch("master")),
     ],
