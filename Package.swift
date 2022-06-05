@@ -14,11 +14,14 @@ let package = Package(
             targets: ["LayersDataFormat"]),
     ],
     dependencies: [
+      .package(name: "TensorFlow",
+               url: "https://github.com/s4tf/s4tf.git",
+               .branch("main"))
     ],
     targets: [
         .target(
             name: "LayersDataFormat",
-            dependencies: []),
+            dependencies: ["TensorFlow"]),
         .testTarget(
             name: "LayersDataFormatTests",
             dependencies: ["LayersDataFormat"]),
